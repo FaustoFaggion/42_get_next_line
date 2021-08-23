@@ -1,3 +1,104 @@
+
+#include "get_next_line.h"
+#include <stdio.h>
+
+char	*gnl_read_buff(int fd, char *break_line)
+{
+	char	*read_buff;
+	int		r;
+	read_buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!read_buff)
+		return (NULL);
+	r = read (fd, read_buff, BUFFER_SIZE);
+	read_buff[r] = '\0';
+	if(!r)
+	{
+		free(break_line);
+		free(read_buff);
+		return (NULL);
+	}
+	return(read_buff);
+}
+
+char	*gnl_join(char *s1, char *s2)
+{
+	char	*swap;
+
+	swap = s1;
+	s1 = ft_strjoin(s1, s2);
+	if (!s1)
+	{
+		free(s1);
+		free(s2);
+		return (NULL);
+	}
+	free(swap);
+	return (s1);
+}
+
+char	*gnl_break_line(int fd, char *break_line)
+{
+	char	*read_buff;
+	int		flag;
+	int		i;
+
+	flag = 0;
+	while (!flag)
+	{
+		read_buff = gnl_read_buff(fd, break_line);
+		if (!read_buff)
+			return (NULL);
+		i = 0;
+		while (i < BUFFER_SIZE)
+		{
+			if(read_buff[i] == '\n')
+				flag = 1;
+			i++;
+		}
+		break_line = gnl_join(break_line, read_buff);
+		free(read_buff);
+	}
+	return (break_line);
+}
+
+char	*get_next_line(int fd)
+{
+	char		*break_line;
+
+	break_line = (char *)malloc(1 * sizeof(char ));
+	*break_line = '\0';
+	if (!break_line)
+		return (NULL);
+
+	break_line = gnl_break_line(fd, break_line);
+
+
+
+	return (break_line);
+}
+
+int	main(void)
+{
+	int		fd;
+	char	*ret;
+
+	fd = open("test.txt", O_RDONLY);
+	ret = get_next_line(fd);
+	while (ret != NULL)
+	{
+		printf("%s", ret);
+		free(ret);
+		ret = get_next_line(fd);
+	}
+	free(ret);
+	return (0);
+}
+
+
+
+
+
+/*
 #include "get_next_line.h"
 #include <stdio.h>
 
@@ -35,8 +136,8 @@ int	gnl_free_malloc(char *read_buff, char *line, char *backup_buff)
 	return (0);
 }
 
-//**ptr -> &line_x
-//*ptr -> line_x = &malloc
+**ptr -> &line_x
+*ptr -> line_x = &malloc
 char	*gnl_line(char *s1, char *s2)
 {
 	char	*swap;
@@ -149,7 +250,8 @@ char	*get_line(int fd)
 			free(read_buff);
 			return (line);
 }
-/*
+*/
+/**
 	Steps for processing a file
 		Declare a file pointer variable
 		Open a file using a open()
@@ -157,6 +259,8 @@ char	*get_line(int fd)
 		close the file using the close()
 **/
 //gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 <files>.c
+
+/*
 int	main(void)
 {
 	int		fd;
@@ -172,3 +276,4 @@ int	main(void)
 	}
 	return (0);
 }
+*/

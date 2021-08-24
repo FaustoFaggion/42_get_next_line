@@ -71,3 +71,87 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_strlcpy(&new[len_s1], s2, (len_s2 + 1));
 	return (new);
 }
+
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fagiusep <fagiusep@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/23 10:17:40 by fagiusep          #+#    #+#             */
+/*   Updated: 2021/08/24 17:50:38 by fagiusep         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+#include "get_next_line.h"
+#include <stdio.h>
+
+char	*gnl_join(char *s1, char *s2)
+{
+	char	*swap;
+
+	swap = s1;
+	s1 = ft_strjoin(s1, s2);
+	return (s1);
+}
+char	*gnl_read_buff(int fd, char *line, char *backup)
+{
+	char	*read_buff;
+	int		r;
+	*backup = '\0';
+	while (*backup == '\0')
+	{
+		read_buff = ft_strdup("");
+		r = read (fd, read_buff, BUFFER_SIZE);
+		read_buff[r] = '\0';
+		if(r <= 0)
+			return (NULL);
+		if (ft_strchr(read_buff, '\n'))
+			backup = gnl_join(backup, read_buff);
+		else
+			line = gnl_join(line, read_buff);
+		free(read_buff);
+	}
+	printf("%s\n", backup);
+	return(line);
+}
+
+
+char	*get_next_line(int fd)
+{
+	char	*line;
+	char	*backup;
+
+	line = ft_strdup("");
+	*line = '\0';
+	backup = ft_strdup("");
+	*backup = '\0';
+
+	line = gnl_read_buff(fd, line, backup);
+	return (line);
+}
+
+int	main(void)
+{
+	int		fd;
+	char	*ret;
+
+	fd = open("test.txt", O_RDONLY);
+	ret = get_next_line(fd);
+	printf("%s", ret);
+	free(ret);
+
+/*
+	while (ret != NULL)
+	{
+		printf("%s", ret);
+		free(ret);
+		ret = get_next_line(fd);
+	}
+	free(ret);
+*/
+	return (0);
+}

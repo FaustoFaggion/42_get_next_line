@@ -30,6 +30,7 @@ char	*gnl_join(char *s1, char *s2)
 	{
 		free(s1);
 		free(s2);
+		free(swap);
 		return (NULL);
 	}
 	free(swap);

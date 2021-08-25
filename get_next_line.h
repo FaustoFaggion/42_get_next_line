@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fagiusep <fagiusep@student.42sp.org.br>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/24 23:38:44 by fagiusep          #+#    #+#             */
-/*   Updated: 2021/08/24 23:39:19 by fagiusep         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
@@ -25,11 +13,11 @@ char	*ft_strchr(const char *s, int c);
 
 char	*ft_strdup(const char	*str);
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize);
-
 size_t	ft_strlen(const char *s);
 
 char	*ft_strjoin(char const *s1, char const *s2);
+
+char    *ft_substr(char const *s, unsigned int start, size_t len);
 
 
 

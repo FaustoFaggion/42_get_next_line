@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fagiusep <fagiusep@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/26 11:07:28 by fagiusep          #+#    #+#             */
+/*   Updated: 2021/08/26 11:12:12 by fagiusep         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 3
+#  define BUFFER_SIZE 42
 # endif
 
 # include <unistd.h>
@@ -17,9 +29,7 @@ size_t	ft_strlen(const char *s);
 
 char	*ft_strjoin(char const *s1, char const *s2);
 
-char    *ft_substr(char const *s, unsigned int start, size_t len);
-
-
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 /**
  * @brief 	Calling in a loop will then allow you to read the text available on
@@ -29,6 +39,5 @@ char    *ft_substr(char const *s, unsigned int start, size_t len);
  *			or if an error has occurred it should return NULL.
 **/
 char	*get_next_line(int fd);
-
 
 #endif

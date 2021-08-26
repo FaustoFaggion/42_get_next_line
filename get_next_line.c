@@ -6,24 +6,18 @@
 /*   By: fagiusep <fagiusep@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:17:40 by fagiusep          #+#    #+#             */
-/*   Updated: 2021/08/25 19:21:18 by fagiusep         ###   ########.fr       */
+/*   Updated: 2021/08/26 11:10:22 by fagiusep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//qdo o arquivo acaba r = 0 - retorno backup se existir
-//qdo erro na leitura ou arquivo vazio r < 0 ->nulo e free mallocs
-//
-
-
 #include "get_next_line.h"
-#include <stdio.h>
 
 char	*gnl_join(char **s1, char **s2)
 {
 	char	*swap;
 
 	swap = *s1;
-	*s1 = ft_strjoin(swap, *s2);
+	*s1 = ft_strjoin((const char *)swap, (const char *)*s2);
 	free(swap);
 	return (*s1);
 }
@@ -33,7 +27,6 @@ static char	*gnl_prep_backup(char **backup)
 	char		*temp;
 	char		*line;
 	size_t		i;
-
 
 	i = 0;
 	while ((*backup)[i] != '\n' && (*backup)[i] != '\0')
@@ -47,21 +40,18 @@ static char	*gnl_prep_backup(char **backup)
 	return (line);
 }
 
-
 int	gnl_read(int fd, char **backup, char **buff)
 {
 	int		r;
 	char	*swap;
 
 	r = 1;
-
-	while(!ft_strchr(*backup, '\n') && r)
+	while (!ft_strchr(*backup, '\n') && r)
 	{
 		r = read(fd, *buff, BUFFER_SIZE);
 		if (r < 0)
 			return (r);
 		(*buff)[r] = '\0';
-
 		swap = *backup;
 		*backup = ft_strjoin(swap, *buff);
 		free(swap);
@@ -75,7 +65,7 @@ static char	*gnl_prep_line(int fd, char **backup, char **buff)
 	int		r;
 
 	if (ft_strchr(*backup, '\n'))
-		return(gnl_prep_backup(backup));
+		return (gnl_prep_backup(backup));
 	r = gnl_read(fd, backup, buff);
 	if (r <= 0 && !**backup)
 	{

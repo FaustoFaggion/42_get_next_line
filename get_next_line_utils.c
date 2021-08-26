@@ -5,108 +5,101 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fagiusep <fagiusep@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/23 10:17:40 by fagiusep          #+#    #+#             */
-/*   Updated: 2021/08/25 19:41:51 by fagiusep         ###   ########.fr       */
+/*   Created: 2021/08/09 15:43:26 by edpaulin          #+#    #+#             */
+/*   Updated: 2021/08/26 11:47:48 by fagiusep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
-char	*gnl_join(char **s1, char **s2)
+size_t	ft_strlen(const char	*str)
 {
-	char	*swap;
+	size_t	len;
 
-	swap = *s1;
-	*s1 = ft_strjoin(swap, *s2);
-	free(swap);
-
-	return (*s1);
+	len = 0;
+	while (str[len])
+		++len;
+	return (len);
 }
 
-static char	*gnl_prep_backup(char **backup)
+char	*ft_strdup(const char *s)
 {
-	char		*temp;
-	char		*line;
-	size_t		i;
-
+	size_t	len;
+	size_t	i;
+	char	*mem;
 
 	i = 0;
-	while ((*backup)[i] != '\n' && (*backup)[i] != '\0')
-		i++;
-	if ((*backup)[i] == '\n')
-		i++;
-	temp = *backup;
-	line = ft_substr(temp, 0, i);
-	*backup = ft_strdup(&(*backup)[i]);
-	free(temp);
-	return (line);
-}
-
-
-int	gnl_read(int fd, char **backup, char **buff)
-{
-	int		r;
-
-	r = 1;
-
-	while(!ft_strchr(*backup, '\n') && r)
-	{
-		r = read(fd, *buff, BUFFER_SIZE);
-		if (r < 0)
-			return (r);
-		(*buff)[r] = '\0';
-
-		*backup = gnl_join(backup, buff);
-	}
-	return (r);
-}
-
-static char	*gnl_prep_line(int fd, char **backup, char **buff)
-{
-	char	*temp;
-	int		r;
-
-	if (ft_strchr(*backup, '\n'))
-		return(gnl_prep_backup(backup));
-	r = gnl_read(fd, backup, buff);
-	if (r <= 0 && !**backup)
-	{
-		free(*backup);
-		*backup = NULL;
+	len = ft_strlen(s);
+	mem = (char *)malloc(sizeof(char) * (len + 1));
+	if (!mem)
 		return (NULL);
-	}
-	if (ft_strchr(*backup, '\n'))
-		return (gnl_prep_backup(backup));
-	if (!ft_strchr(*backup, '\n') && **backup)
+	while (s[i] != '\0')
 	{
-		temp = ft_strdup(*backup);
-		free(*backup);
-		*backup = NULL;
-		return (temp);
+		mem[i] = s[i];
+		++i;
 	}
+	mem[i] = '\0';
+	return (mem);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*str;
+	size_t	i;
+	size_t	j;
+	size_t	size;
+
+	if (!s1 || !s2)
+		return (NULL);
+	size = ft_strlen(s1) + ft_strlen(s2) + 1;
+	str = (char *)malloc(sizeof(char) * size);
+	if (!str)
+		return (NULL);
+	i = -1;
+	while (s1[++i])
+		str[i] = s1[i];
+	j = -1;
+	while (s2[++j])
+		str[i + j] = s2[j];
+	str[i + j] = '\0';
+	return (str);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	while (*(char *)s != '\0')
+	{
+		if (*(char *)s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if (*(char *)s == (char)c)
+		return ((char *)s);
 	return (NULL);
 }
 
-
-
-char	*get_next_line(int fd)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	static char	*backup;
-	char		*line;
-	char		*buff;
+	size_t	i;
+	size_t	srclen;
+	char	*str;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (!s)
 		return (NULL);
-	if (!backup)
+	srclen = ft_strlen(s);
+	if (start > srclen)
+		return (ft_strdup(""));
+	if (start + len > srclen)
+		len = srclen - start;
+	str = (char *)malloc(sizeof(char) * len + 1);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (s[start + i] && i < len)
 	{
-		backup = ft_strdup("");
-		if (!backup)
-			return (NULL);
+		str[i] = s[start + i];
+		i++;
 	}
-	buff = (char *)malloc(BUFFER_SIZE + 1);
-	line = gnl_prep_line(fd, &backup, &buff);
-	free(buff);
-	buff = NULL;
-	return (line);
+	str[i] = '\0';
+	return (str);
 }

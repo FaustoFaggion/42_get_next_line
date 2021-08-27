@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fagiusep <fagiusep@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:17:40 by fagiusep          #+#    #+#             */
-/*   Updated: 2021/08/27 18:58:53 by fagiusep         ###   ########.fr       */
+/*   Updated: 2021/08/27 19:37:01 by fagiusep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*gnl_join(char **s1, char **s2)
 {
@@ -87,20 +87,20 @@ static char	*gnl_prep_line(int fd, char **backup, char **buff)
 
 char	*get_next_line(int fd)
 {
-	static char	*backup;
+	static char	*backup[1024];
 	char		*line;
 	char		*buff;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!backup)
+	if (!backup[fd])
 	{
-		backup = ft_strdup("");
-		if (!backup)
+		backup[fd] = ft_strdup("");
+		if (!backup[fd])
 			return (NULL);
 	}
 	buff = (char *)malloc(BUFFER_SIZE + 1);
-	line = gnl_prep_line(fd, &backup, &buff);
+	line = gnl_prep_line(fd, &backup[fd], &buff);
 	free(buff);
 	buff = NULL;
 	return (line);

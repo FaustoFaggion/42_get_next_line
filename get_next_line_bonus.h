@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fagiusep <fagiusep@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/08 15:02:22 by fagiusep          #+#    #+#             */
+/*   Updated: 2021/09/08 15:02:23 by fagiusep         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
 
@@ -13,7 +25,6 @@
 # ifndef OPEN_MAX
 #  define OPEN_MAX 256
 # endif
-
 
 /**
  * @brief	returns a pointer to the first occurrence of the character c in

@@ -8,6 +8,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <limits.h>
 
 # ifndef OPEN_MAX
 #  define OPEN_MAX 256

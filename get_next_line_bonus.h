@@ -9,6 +9,11 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
+# ifndef OPEN_MAX
+#  define OPEN_MAX 256
+# endif
+
+
 /**
  * @brief	returns a pointer to the first occurrence of the character c in
  * 			the string s.

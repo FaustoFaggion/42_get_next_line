@@ -6,7 +6,7 @@
 /*   By: fagiusep <fagiusep@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:17:40 by fagiusep          #+#    #+#             */
-/*   Updated: 2021/08/27 19:37:01 by fagiusep         ###   ########.fr       */
+/*   Updated: 2021/09/08 14:39:39 by fagiusep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static char	*gnl_prep_line(int fd, char **backup, char **buff)
 
 char	*get_next_line(int fd)
 {
-	static char	*backup[1024];
+	static char	*backup[OPEN_MAX];
 	char		*line;
 	char		*buff;
 

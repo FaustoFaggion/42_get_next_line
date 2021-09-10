@@ -6,21 +6,11 @@
 /*   By: fagiusep <fagiusep@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:17:40 by fagiusep          #+#    #+#             */
-/*   Updated: 2021/09/08 14:51:17 by fagiusep         ###   ########.fr       */
+/*   Updated: 2021/09/10 15:31:59 by fagiusep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-
-char	*gnl_join(char **s1, char **s2)
-{
-	char	*swap;
-
-	swap = *s1;
-	*s1 = ft_strjoin((const char *)swap, (const char *)*s2);
-	free(swap);
-	return (*s1);
-}
 
 static char	*gnl_prep_backup(char **backup)
 {
@@ -40,7 +30,7 @@ static char	*gnl_prep_backup(char **backup)
 	return (line);
 }
 
-int	gnl_read(int fd, char **backup, char **buff)
+static int	gnl_read(int fd, char **backup, char **buff)
 {
 	int		r;
 	char	*swap;
